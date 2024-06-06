@@ -1,5 +1,5 @@
 import { Socket,Server } from "socket.io";
-import http from 'node:http'
+import http from 'http'
 
 import { UserManager } from "./managers/UserManager";
 
