@@ -1,6 +1,5 @@
-import { Socket,Server } from "socket.io";
+import { Socket , Server } from 'socket.io';
 import http from 'http'
-
 import { UserManager } from "./managers/UserManager";
 
 const server = http.createServer(http);
