@@ -1,11 +1,8 @@
-import { Socket } from "socket.io";
-import http from "http";
+import { Socket,Server } from "socket.io";
+import http from 'node:http'
 
-import express from 'express';
-import { Server } from 'socket.io';
 import { UserManager } from "./managers/UserManager";
 
-const app = express();
 const server = http.createServer(http);
 
 const io = new Server(server, {
@@ -20,7 +17,7 @@ io.on('connection', (socket: Socket) => {
   userManager.addUser("randomName", socket);
 
 
-  socket.on('sendMessage', (message) => {
+  socket.on('sendMessage', (message : string) => {
     io.emit('receiveMessage', message);
   });
 
