@@ -36,10 +36,8 @@ export const Landing = () => {
 
   if (!joined) {
     return (
-      <div
-        className="grid h-screen place-items-center font-mono bg-gray-300"
-      >
-        <div>
+      <div className="grid h-screen place-items-center font-mono bg-gradient-to-r from-slate-900 to-slate-700">      
+        <div >
           <div className="">
             <video
               className="rounded-lg h-auto"
@@ -50,7 +48,7 @@ export const Landing = () => {
           <div className="flex gap-10 mt-10">
             <input
               style={{ width: "100%" }}
-              className="bg-gray-50 text-xl text-center border border-gray-300 text-gray-900  rounded-lg  block p-1 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:bg-slate-700"
+              className="text-xl text-center border text-gray-900  rounded-lg  block p-1 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white   dark:bg-slate-700"
               type="text"
               placeholder="Name"
               onChange={(e) => setName(e.target.value)}

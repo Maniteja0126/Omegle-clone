@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Socket,io } from "socket.io-client";
 import { Navbar } from "./Room/Navbar";
 import { Main } from "./Room/Main";
 import toast, {Toaster} from 'react-hot-toast';
 
-const URL = "http://localhost:3000";
+const URL =   import.meta.env.VITE_URL;
+
+
 
 export const Room = ({
   name,
@@ -29,6 +31,7 @@ export const Room = ({
 
   useEffect(() => {
     const socket = io(URL);
+    
     socket.on("send-offer", async ({ roomId }) => {
       setLobby(false);
       const pc = new RTCPeerConnection();
@@ -148,6 +151,7 @@ export const Room = ({
       }
     });
 
+
     setSocket(socket);
   }, [name]);
 
@@ -170,7 +174,7 @@ export const Room = ({
 
   return (
     <div className='flex flex-col gap-12'>
-      <Navbar />
+      <Navbar/>
       <Main remoteVideoRef={remoteVideoRef} localVideoRef={localVideoRef} name={name} socket={socket}/>
       <Toaster/>
     </div>
