@@ -4,6 +4,8 @@ const { UserManager } = require('./managers/UserManager');
 
 const server = http.createServer();
 
+const PORT = process.env.PORT || 3000;
+
 const io = new Server(server, {
   cors: {
     origin: "*"
@@ -24,6 +26,6 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(3000, () => {
-  console.log('listening on *:3000');
+server.listen(PORT, () => {
+  console.log('listening on *:' , PORT);
 });
