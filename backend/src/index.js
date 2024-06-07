@@ -1,8 +1,8 @@
-import { Socket , Server } from 'socket.io';
-import http from 'http'
-import { UserManager } from "./managers/UserManager";
+const { Server } = require('socket.io');
+const http = require('http');
+const { UserManager } = require('./managers/UserManager');
 
-const server = http.createServer(http);
+const server = http.createServer();
 
 const io = new Server(server, {
   cors: {
@@ -12,20 +12,18 @@ const io = new Server(server, {
 
 const userManager = new UserManager();
 
-io.on('connection', (socket: Socket) => {
+io.on('connection', (socket) => {
   userManager.addUser("randomName", socket);
 
-
-  socket.on('sendMessage', (message : string) => {
+  socket.on('sendMessage', (message) => {
     io.emit('receiveMessage', message);
   });
 
-
   socket.on("disconnect", () => {
     userManager.removeUser(socket.id);
-  })
+  });
 });
 
 server.listen(3000, () => {
-    console.log('listening on *:3000');
+  console.log('listening on *:3000');
 });
