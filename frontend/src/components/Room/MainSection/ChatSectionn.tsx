@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import  { Socket } from 'socket.io-client';
 import { LeftChat } from './LeftChat';
 import { RightChat } from './RightChat';
+import { DefaultEventsMap } from '@socket.io/component-emitter';
 
 
 
 interface ChatSectionProps {
-  socket : Socket;
+  socket : Socket<DefaultEventsMap, DefaultEventsMap> | null;
   name: string;
 }
 
@@ -21,7 +22,7 @@ export const ChatSection: React.FC<ChatSectionProps> = ({ name , socket }) => {
   useEffect(() => {
     if (socket) { 
       socket.on('connect', () => {
-        setSocketId(socket.id);
+        setSocketId(socket.id || null);
       });
       
       socket.on('receiveMessage', (message) => {
@@ -41,19 +42,21 @@ export const ChatSection: React.FC<ChatSectionProps> = ({ name , socket }) => {
   };
 
   const onSendHandler = () => {
-    const messageData = {
-      ...currentMessage,
-      time: new Date().toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      name,
-      status:   "delivered" ,
-      senderId: socketId,
-    };
-  
+    if(socket){
+      const messageData = {
+        ...currentMessage,
+        time: new Date().toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+        name,
+        status:   "delivered" ,
+        senderId: socketId,
+      };
+    
     socket.emit('sendMessage', messageData);
     setCurrentMessage({ message: '' }); 
+  }
   };
   
 

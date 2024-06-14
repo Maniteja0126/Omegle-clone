@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Socket,io } from "socket.io-client";
 import { Navbar } from "./Room/Navbar";
 import { Main } from "./Room/Main";
 import toast, {Toaster} from 'react-hot-toast';
+import { DefaultEventsMap } from '@socket.io/component-emitter';
 
 const URL =   import.meta.env.VITE_URL;
 
@@ -19,15 +21,15 @@ export const Room = ({
   localVideoTrack: MediaStreamTrack | null;
 }) => {
   const [lobby, setLobby] = useState(true);
-  const [socket, setSocket] = useState<null | Socket>(null);
-  const [sendingPc, setSendingPc] = useState<null | RTCPeerConnection>(null);
-  const [receivingPc, setReceivingPc] = useState<null | RTCPeerConnection>(null);
-  const [remoteVideoTrack, setRemoteVideoTrack] = useState<MediaStreamTrack | null>(null);
-  const [remoteAudioTrack, setRemoteAudioTrack] = useState<MediaStreamTrack | null>(null);
-  const [remoteMediaStream, setRemoteMediaStream] = useState<MediaStream | null>(null);
+  const [socket, setSocket] = useState<Socket<DefaultEventsMap, DefaultEventsMap> | null>(null);
+  const [_sendingPc, setSendingPc] = useState<null | RTCPeerConnection>(null);
+  const [_receivingPc, setReceivingPc] = useState<null | RTCPeerConnection>(null);
+  const [_remoteVideoTrack, setRemoteVideoTrack] = useState<MediaStreamTrack | null>(null);
+  const [_remoteAudioTrack, setRemoteAudioTrack] = useState<MediaStreamTrack | null>(null);
+  const [_remoteMediaStream, setRemoteMediaStream] = useState<MediaStream | null>(null);
 
-  const remoteVideoRef = useRef<HTMLVideoElement>();
-  const localVideoRef = useRef<HTMLVideoElement>();
+  const remoteVideoRef = useRef<HTMLVideoElement | null>(null);
+  const localVideoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     const socket = io(URL);

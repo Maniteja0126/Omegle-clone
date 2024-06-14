@@ -2,12 +2,13 @@ import React from 'react';
 import VideoShower from './MainSection/VideoShower';
 import { ChatSection } from './MainSection/ChatSectionn';
 import { Socket } from 'socket.io-client';
+import { DefaultEventsMap } from '@socket.io/component-emitter';
 
 interface MainProps {
   remoteVideoRef: React.RefObject<HTMLVideoElement>;
   localVideoRef: React.RefObject<HTMLVideoElement>;
   name : string;
-  socket : Socket
+  socket : Socket<DefaultEventsMap, DefaultEventsMap> | null;
 }
 
 export const Main: React.FC<MainProps> = ({ remoteVideoRef, localVideoRef , name  , socket}) => {
